@@ -26,7 +26,7 @@ TrayIcon::TrayIcon() {
     icon.setIsMask(true);
     setIcon(icon);
 
-    setVisible(QSettings(qApp->applicationName()).value(CFG_SHOWTRAY, DEF_SHOWTRAY).toBool());
+    setVisible(QSettings(qApp->applicationName(), qApp->applicationName()).value(CFG_SHOWTRAY, DEF_SHOWTRAY).toBool());
 
 //    QObject::connect(this, &TrayIcon::activated, [](QSystemTrayIcon::ActivationReason reason){
 //        if( reason == QSystemTrayIcon::ActivationReason::Trigger)
@@ -54,7 +54,7 @@ TrayIcon::TrayIcon() {
 }
 
 void TrayIcon::setVisible(bool enable) {
-    QSettings(qApp->applicationName()).setValue(CFG_SHOWTRAY, enable);
+    QSettings(qApp->applicationName(), qApp->applicationName()).setValue(CFG_SHOWTRAY, enable);
     QSystemTrayIcon::setVisible(enable);
 }
 

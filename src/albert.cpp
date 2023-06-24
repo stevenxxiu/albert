@@ -193,7 +193,7 @@ static void printSystemReport()
 
 static void notifyVersionChange()
 {
-    auto settings = QSettings(qApp->applicationName());
+    auto settings = QSettings(qApp->applicationName(), qApp->applicationName());
     auto current_version = qApp->applicationVersion();
     auto last_used_version = settings.value(CFG_LAST_USED_VERSION).toString();
 

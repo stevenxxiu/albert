@@ -38,7 +38,7 @@ QueryEngine::QueryEngine(ExtensionRegistry &registry):
 {
     UsageDatabase::initializeDatabase();
 
-    QSettings s(qApp->applicationName());
+    QSettings s(qApp->applicationName(), qApp->applicationName());
     fuzzy_ = s.value(CFG_FUZZY, DEF_FUZZY).toBool();
     separators_ = s.value(CFG_SEPARATORS, DEF_SEPARATORS).toString();
     memory_decay_ = s.value(CFG_MEMORY_DECAY, DEF_MEMORY_DECAY).toDouble();
@@ -243,7 +243,7 @@ double QueryEngine::memoryDecay() const { return memory_decay_; }
 void QueryEngine::setMemoryDecay(double val)
 {
     memory_decay_ = val;
-    QSettings(qApp->applicationName()).setValue(CFG_MEMORY_DECAY, val);
+    QSettings(qApp->applicationName(), qApp->applicationName()).setValue(CFG_MEMORY_DECAY, val);
     updateUsageScore();
 }
 
@@ -253,7 +253,7 @@ bool QueryEngine::prioritizePerfectMatch() const
 void QueryEngine::setPrioritizePerfectMatch(bool val)
 {
     prioritize_perfect_match_ = val;
-    QSettings(qApp->applicationName()).setValue(CFG_PRIO_PERFECT, val);
+    QSettings(qApp->applicationName(), qApp->applicationName()).setValue(CFG_PRIO_PERFECT, val);
     GlobalQueryHandlerPrivate::setPrioritizePerfectMatch(prioritize_perfect_match_);
 }
 
@@ -262,7 +262,7 @@ bool QueryEngine::fuzzy() const { return fuzzy_; }
 void QueryEngine::setFuzzy(bool fuzzy)
 {
     fuzzy_ = fuzzy;
-    QSettings(qApp->applicationName()).setValue(CFG_FUZZY, fuzzy);
+    QSettings(qApp->applicationName(), qApp->applicationName()).setValue(CFG_FUZZY, fuzzy);
     for (auto *handler : enabled_global_handlers_)
         if (auto *ih = dynamic_cast<IndexQueryHandler*>(handler); ih)
             ih->d->setIndex(make_unique<ItemIndex>(separators_, false, GRAM_SIZE,
@@ -274,7 +274,7 @@ const QString &QueryEngine::separators() const { return separators_; }
 void QueryEngine::setSeparators(const QString &separators)
 {
     separators_ = separators;
-    QSettings(qApp->applicationName()).setValue(CFG_SEPARATORS, separators);
+    QSettings(qApp->applicationName(), qApp->applicationName()).setValue(CFG_SEPARATORS, separators);
     for (auto *handler : enabled_global_handlers_)
         if (auto *ih = dynamic_cast<IndexQueryHandler*>(handler); ih)
             ih->d->setIndex(make_unique<ItemIndex>(separators_, false, GRAM_SIZE,

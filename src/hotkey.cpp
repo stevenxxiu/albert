@@ -11,7 +11,7 @@ static const char *DEF_HOTKEY = "Ctrl+Space";
 
 Hotkey::Hotkey()
 {
-    QSettings s(qApp->applicationName());
+    QSettings s(qApp->applicationName(), qApp->applicationName());
     if (isPlatformSupported())
         setHotkey(QKeySequence::fromString(s.value(CFG_HOTKEY, DEF_HOTKEY).toString())[0]);
     else {
@@ -42,7 +42,7 @@ bool Hotkey::setHotkey(QKeyCombination keycode)
 
         hotkey_ = std::move(hotkey);
 
-        QSettings(qApp->applicationName()).setValue(CFG_HOTKEY, ks.toString());
+        QSettings(qApp->applicationName(), qApp->applicationName()).setValue(CFG_HOTKEY, ks.toString());
 
         QObject::connect(hotkey_.get(), &QHotkey::activated,
                          qApp, [](){ albert::toggle(); });

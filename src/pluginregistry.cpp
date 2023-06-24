@@ -26,14 +26,16 @@ vector<const PluginLoader*> PluginRegistry::plugins() const
 
 bool PluginRegistry::isEnabled(const QString &id) const
 {
-    return QSettings(qApp->applicationName()).value(QString("%1/enabled").arg(id), false).toBool();
+    return QSettings(qApp->applicationName(), qApp->applicationName())
+        .value(QString("%1/enabled").arg(id), false).toBool();
 }
 
 void PluginRegistry::enable(const QString &id, bool enable)
 {
     if (plugins_.contains(id)){
         if (isEnabled(id) != enable){
-            QSettings(qApp->applicationName()).setValue(QString("%1/enabled").arg(id), enable);
+            QSettings(qApp->applicationName(), qApp->applicationName())
+                .setValue(QString("%1/enabled").arg(id), enable);
             load(id, enable);
         }
     } else

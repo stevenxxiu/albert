@@ -29,7 +29,7 @@ QDir albert::Extension::dataDir() const
 
 std::unique_ptr<QSettings> albert::Extension::settings() const
 {
-    auto s = std::make_unique<QSettings>(qApp->applicationName());
+    auto s = std::make_unique<QSettings>(qApp->applicationName(), qApp->applicationName());
     s->beginGroup(id());
     return s;
 }

@@ -189,7 +189,8 @@ TerminalProvider::TerminalProvider() : terminal_(nullptr)
         qFatal("No terminals available.");
 
     // Set the configured terminal
-    auto cfg_term_cmd = QSettings(qApp->applicationName()).value(CFG_TERM, QString()).toString();
+    auto cfg_term_cmd = QSettings(qApp->applicationName(), qApp->applicationName())
+        .value(CFG_TERM, QString()).toString();
     for (const auto & terminal : terminals_)
         if (terminal->name() == cfg_term_cmd)
             terminal_ = terminal.get();
@@ -214,5 +215,5 @@ const vector<unique_ptr<Terminal>> &TerminalProvider::terminals() const
 void TerminalProvider::setTerminal(uint i)
 {
     terminal_ = terminals_[i].get();
-    QSettings(qApp->applicationName()).setValue(CFG_TERM, terminal_->name());
+    QSettings(qApp->applicationName(), qApp->applicationName()).setValue(CFG_TERM, terminal_->name());
 }
